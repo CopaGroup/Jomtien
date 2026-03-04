@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถอดรหัส 5 กับดักสมองที่โซเชียลมีเดียใช้ควบคุมคุณ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; 
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 320px;
+            }
+        }
+        
+        body {
+            padding-top: 60px;
+        }
+        
+        .lang-switcher {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+        
+        .lang-btn.active {
+            background-color: #007BFF;
+            color: #FFFFFF;
+        }
+        
+        body:lang(zh) {
+            font-family: 'Noto Sans SC', 'Sarabun', sans-serif;
+        }
+        body:lang(ru) {
+            font-family: 'Roboto', 'Sarabun', sans-serif;
+        }
+        body:lang(en) {
+            font-family: 'Roboto', 'Sarabun', sans-serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sarabun': ['Sarabun', 'sans-serif'],
+                        'noto-sc': ['Noto Sans SC', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#007BFF',
+                        'brand-accent-yellow': '#FFC107',
+                        'brand-accent-orange': '#FD7E14',
+                        'brand-accent-pink': '#E83E8C',
+                        'brand-bg': '#F8F9FA',
+                        'brand-text': '#343A40',
+                        'brand-white': '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sarabun bg-brand-bg text-brand-text leading-relaxed">
+
+    <div id="lang-switcher" class="lang-switcher w-full bg-brand-text text-brand-white shadow-lg p-3 flex justify-center space-x-2 md:space-x-4">
+        <button onclick="switchLanguage('th')" lang="th" class="lang-btn th font-sarabun p-2 px-3 text-sm md:text-base md:px-4 rounded-md font-semibold transition-colors duration-200">ไทย</button>
+        <button onclick="switchLanguage('en')" lang="en" class="lang-btn en font-roboto p-2 px-3 text-sm md:text-base md:px-4 rounded-md font-semibold transition-colors duration-200">English</button>
+        <button onclick="switchLanguage('ru')" lang="ru" class="lang-btn ru font-roboto p-2 px-3 text-sm md:text-base md:px-4 rounded-md font-semibold transition-colors duration-200">Русский</button>
+        <button onclick="switchLanguage('zh')" lang="zh" class="lang-btn zh font-noto-sc p-2 px-3 text-sm md:text-base md:px-4 rounded-md font-semibold transition-colors duration-200">中文</button>
+    </div>
+
+    <header class="bg-brand-primary text-brand-white text-center py-20 px-6 shadow-2xl">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-key="mainTitle"></h1>
+        <h2 class="text-2xl md:text-3xl font-semibold opacity-90" data-key="mainSubtitle"></h2>
+        <p class="text-lg mt-6 max-w-3xl mx-auto opacity-80" data-key="introP1"></p>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6 md:p-12">
+
+        <section id="video-intro" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12 text-center">
+            <h2 class="text-3xl font-bold text-brand-text mb-6" data-key="videoTitle"></h2>
+            <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-lg">
+                <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/bjDaW8Uo9Mk?si=wXAyvNTSVKYmKM81" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="text-lg max-w-3xl mx-auto mt-6" data-key="videoDesc"></p>
+        </section>
+
+        <section id="intro" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12 text-center">
+            <h2 class="text-3xl font-bold text-brand-text mb-4" data-key="riskTitle"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-10" data-key="riskDesc"></p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-accent-yellow">
+                    <span class="text-6xl">👶</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="naiveTitle"></h3>
+                    <p data-key="naiveDesc"></p>
+                </div>
+
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-accent-orange">
+                    <span class="text-6xl">🎯</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="biasedTitle"></h3>
+                    <p data-key="biasedDesc"></p>
+                </div>
+
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-accent-pink">
+                    <span class="text-6xl">❤️</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="rapportTitle"></h3>
+                    <p data-key="rapportDesc"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- START: Added Missing Content --><section id="trap1" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-brand-primary text-center mb-4" data-key="trap1Title"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-8 text-center" data-key="trap1Desc"></p>
+            <!-- Flow diagram --><div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="text-center p-4 bg-brand-bg rounded-lg shadow min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap1Flow1"></div>
+                    <div class="text-sm opacity-70" data-key="trap1Flow1Sub"></div>
+                </div>
+                <div class="text-4xl text-brand-primary opacity-50 font-bold">→</div>
+                <div class="text-center p-4 bg-brand-accent-orange text-white rounded-lg shadow-lg min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap1Flow2"></div>
+                    <div class="text-sm opacity-70" data-key="trap1Flow2Sub"></div>
+                </div>
+                <div class="text-4xl text-brand-primary opacity-50 font-bold">→</div>
+                <div class="text-center p-4 bg-brand-text text-white rounded-lg shadow line-through min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap1Flow3"></div>
+                    <div class="text-sm opacity-70" data-key="trap1Flow3Sub"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trap2" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-brand-primary text-center mb-4" data-key="trap2Title"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-8 text-center" data-key="trap2Desc"></p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold text-brand-text mb-4 text-center" data-key="trap2ChartTitle"></h3>
+                    <!-- THIS IS THE FIX: Added the canvas element that was missing --><div class="chart-container">
+                        <canvas id="rapportDonutChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <p class="p-4 bg-brand-bg rounded-lg border-l-4 border-brand-primary" data-key="trap2List1"></p>
+                    <p class="p-4 bg-brand-bg rounded-lg border-l-4 border-brand-accent-yellow" data-key="trap2List2"></p>
+                    <p class="p-4 bg-brand-bg rounded-lg border-l-4 border-brand-accent-orange" data-key="trap2List3"></p>
+                    <p class="p-4 bg-brand-bg rounded-lg border-l-4 border-brand-accent-pink" data-key="trap2List4"></p>
+                </div>
+            </div>
+            <p class="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-lg" data-key="trap2Example"></p>
+        </section>
+
+        <section id="trap3" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-brand-primary text-center mb-4" data-key="trap3Title"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-8 text-center" data-key="trap3Desc"></p>
+            <!-- Flow diagram --><div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="text-center p-4 bg-brand-bg rounded-lg shadow min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap3Flow1"></div>
+                </div>
+                <div class="text-4xl text-brand-primary opacity-50 font-bold">→</div>
+                <div class="text-center p-4 bg-brand-bg rounded-lg shadow min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap3Flow2"></div>
+                </div>
+                <div class="text-4xl text-brand-primary opacity-50 font-bold">→</div>
+                <div class="text-center p-6 bg-brand-accent-pink text-white rounded-lg shadow-lg min-w-[180px]">
+                    <div class="text-2xl font-bold" data-key="trap3Flow3"></div>
+                    <div class="text-md opacity-80" data-key="trap3Flow3Sub"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trap4" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-brand-primary text-center mb-4" data-key="trap4Title"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-10 text-center" data-key="trap4Desc"></p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-primary">
+                    <span class="text-5xl">🤖</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="trap4Item1Title"></h3>
+                    <p data-key="trap4Item1Desc"></p>
+                </div>
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-primary">
+                    <span class="text-5xl">🧠</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="trap4Item2Title"></h3>
+                    <p data-key="trap4Item2Desc"></p>
+                </div>
+                <div class="bg-brand-bg rounded-lg p-6 border-b-4 border-brand-primary">
+                    <span class="text-5xl">🤝</span>
+                    <h3 class="text-2xl font-bold text-brand-text my-2" data-key="trap4Item3Title"></h3>
+                    <p data-key="trap4Item3Desc"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="trap5" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-brand-primary text-center mb-4" data-key="trap5Title"></h2>
+            <p class="text-lg max-w-4xl mx-auto mb-8 text-center" data-key="trap5Desc"></p>
+            <!-- Flow diagram --><div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="text-center p-4 bg-brand-bg rounded-lg shadow min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap5Flow1"></div>
+                </div>
+                <div class="text-4xl text-brand-primary opacity-50 font-bold">→</div>
+                <div class="text-center p-4 bg-brand-bg rounded-lg shadow min-w-[180px]">
+                    <div class="text-xl font-bold" data-key="trap5Flow2"></div>
+                </div>
+                <div class="text-4xl text-red-500 opacity-70 font-bold">→</div>
+                <div class="text-center p-6 bg-red-600 text-white rounded-lg shadow-lg min-w-[180px]">
+                    <div class="text-2xl font-bold" data-key="trap5Flow3"></div>
+                    <div class="text-md opacity-80" data-key="trap5Flow3Sub"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- END: Added Missing Content --><!-- New Gallery Section --><section id="gallery" class="bg-brand-white rounded-lg shadow-xl p-8 md:p-12 mb-12">
+            <!-- Removed the gallery title --><div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                
+                <!-- รูปภาพที่ 1 --><div class="bg-gray-100 rounded-lg shadow-inner overflow-hidden transform transition-all duration-300 hover:scale-105">
+                    <img src="https://i.postimg.cc/bNpD2ZXC/Gemini_Generated_Image_8ioky78ioky78iok_gigapixel_high_fidelity_v2_2x.png" 
+                         alt="Gemini Generated Image 1" 
+                         class="w-full h-auto object-cover"
+                     onerror="this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found'">
+                    <!-- Removed the image description --></div>
+                
+                <!-- รูปภาพที่ 2 --><div class="bg-gray-100 rounded-lg shadow-inner overflow-hidden transform transition-all duration-300 hover:scale-105">
+                    <img src="https://i.postimg.cc/BQ4L1jWB/Gemini_Generated_Image_8qtohu8qtohu8qto_gigapixel_high_fidelity_v2_2x.png" 
+                         alt="Gemini Generated Image 2" 
+                         class="w-full h-auto object-cover"
+                     onerror="this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found'">
+                    <!-- Removed the image description --></div>
+                
+                <!-- รูปภาพที่ 3 --><div class="bg-gray-100 rounded-lg shadow-inner overflow-hidden transform transition-all duration-300 hover:scale-105">
+                    <img src="https://i.postimg.cc/0QcGx1Kk/Gemini-Generated-Image-ukru8ukru8ukru8u.png" 
+                         alt="Gemini Generated Image 3" 
+                         class="w-full h-auto object-cover"
+                         onerror="this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found'">
+                    <!-- Removed the image description --></div>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-text text-brand-white py-20 px-6 text-center mt-12">
+        <h3 class="text-3xl font-extrabold mb-6" data-key="footerTitle"></h3>
+        <p class="text-xl max-w-3xl mx-auto opacity-80 mb-8" data-key="footerDesc"></p>
+        <div class="p-8 bg-brand-primary rounded-lg shadow-2xl max-w-lg mx-auto">
+            <span class="text-6xl">👨‍✈️</span>
+            <h4 class="text-2xl font-bold mt-2" data-key="footerBoxTitle"></h4>
+            <p class="text-lg opacity-80" data-key="footerBoxDesc"></p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            th: {
+                mainTitle: "ถอดรหัส 5 กับดักสมอง",
+                mainSubtitle: "ที่โซเชียลมีเดียใช้ควบคุมคุณ",
+                introP1: "คุณไม่ได้โง่ คุณแค่เป็นมนุษย์",
+                videoTitle: "วิดีโอต้นเรื่อง (Inspiration)",
+                videoDesc: "วิดีโอนี้คือจุดเริ่มต้นของการสนทนาเกี่ยวกับ \"ปรากฏการณ์ย้อนแย้งของสายสัมพันธ์\" (Rapport Paradox) ซึ่งนำไปสู่การถอดรหัสกับดักทั้ง 5 ใน Infographic นี้",
+                riskTitle: "95% ของผู้ใช้ ตกอยู่ในความเสี่ยง",
+                riskDesc: "แพลตฟอร์มถูกออกแบบมาเพื่อแสวงประโยชน์จากจุดอ่อนทางจิตวิทยาพื้นฐาน และผู้ใช้ส่วนใหญ่ยังขาดทักษะที่จะตามทัน โดยแบ่งเป็น 3 กลุ่มหลัก:",
+                naiveTitle: "ผู้ไร้เดียงสา (The Naive)",
+                naiveDesc: "กลุ่มที่ขาดภูมิคุ้มกันทางเทคโนโลยี เชื่อเนื้อหาที่เห็นโดยง่าย",
+                biasedTitle: "ผู้มีอคติ (The Biased)",
+                biasedDesc: "กลุ่มที่ใช้การรับรู้เพื่อยืนยันความเชื่อเดิมของตนเอง",
+                rapportTitle: "ผู้ภักดี (The Rapport-Driven)",
+                rapportDesc: "กลุ่มที่ภูมิคุ้มกันสูงต่อข้อมูล แต่ต่ำต่อสายสัมพันธ์กับอินฟลูเอนเซอร์",
+                trap1Title: "กับดักที่ 1: สัญชาตญาณ vs. เหตุผล",
+                trap1Desc: "สงครามที่แท้จริงคือการต่อสู้ภายในสมองของคุณ อัลกอริทึมถูกออกแบบมาให้ป้อนข้อมูลกระตุ้นอารมณ์ไปยัง \"System 1\" (สัญชาตญาณ) เพื่อให้มันทำงานแทนที่ \"System 2\" (การคิดวิเคราะห์)",
+                trap1Flow1: "คอนเทนต์กระตุ้นอารมณ์",
+                trap1Flow1Sub: "(Feed โซเชียล)",
+                trap1Flow2: "System 1 (สัญชาตญาณ)",
+                trap1Flow2Sub: "ถูกกระตุ้น",
+                trap1Flow3: "System 2 (เหตุผล)",
+                trap1Flow3Sub: "[ ถูกข้าม ]",
+                trap2Title: "กับดักที่ 2: สมองเชื่อ ‘คน’ ไม่ใช่ ‘ข้อมูล’",
+                trap2Desc: "\"ปรากฏการณ์ย้อนแย้งของสายสัมพันธ์\" (Rapport Paradox) คือกลไกที่ทรงพลังที่สุด เราให้น้ำหนักกับ \"สายสัมพันธ์\" มากกว่า \"ความแม่นยำ\" อินฟลูเอนเซอร์สร้างสิ่งนี้ผ่าน 4 องค์ประกอบ",
+                trap2ChartTitle: "องค์ประกอบ 4 ประการของสายสัมพันธ์:",
+                trap2List1: "การแสดงความเข้าอกเข้าใจ (Empathy)",
+                trap2List2: "การฉายภาพความจริงใจ (Authenticity)",
+                trap2List3: "การสร้างความคล้ายคลึงกัน (Similarity)",
+                trap2List4: "การสร้างประสบการณ์ร่วม (Shared Experience)",
+                trap2Example: "<a href=\"https://youtu.be/1Y8gyIjlzIs?si=-hhv8ctuI1LXHrEM\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:underline\"><span class=\"font-bold text-brand-accent-orange\">ตัวอย่าง:</span> วิดีโอ \"ถึงเวลาทิ้งเมืองไทย\"</a> ดูจริงใจ แต่เบื้องหลังคือการขายคอร์สย้ายไปกัมพูชา นี่คือการใช้ Rapport Paradox เป็นเครื่องมือ",
+                trap3Title: "กับดักที่ 3: ‘คุกแสนสบาย’ ของอัลกอริทึม",
+                trap3Desc: "อัลกอริทึมไม่ได้แสดง \"ความจริง\" แต่แสดง \"สิ่งที่คุณอยากดู\" เพื่อขังคุณไว้ใน \"ห้องเสียงสะท้อน\" (Echo Chamber) ที่มีแต่สิ่งที่ยืนยันความเชื่อเดิมของคุณ (Confirmation Bias)",
+                trap3Flow1: "คุณชอบคอนเทนต์",
+                trap3Flow2: "อัลกอริทึมทำงาน",
+                trap3Flow3: "ห้องเสียงสะท้อน",
+                trap3Flow3Sub: "\"ทุกคนคิดเหมือนฉัน\"",
+                trap4Title: "ทางออกคือ ‘โค้ชฝึกสมอง’ (AI)",
+                trap4Desc: "เมื่อปัญหาเกิดจากอารมณ์ การสู้ด้วยข้อเท็จจริงจึงไม่ได้ผล AI สามารถเป็น \"วัคซีน\" สร้างภูมิคุ้มกันให้สมองได้ใน 3 บทบาท",
+                trap4Item1Title: "ผู้ช่วยสืบค้นบริบท (Co-Pilot)",
+                trap4Item1Desc: "AI \"สะกิด\" ให้ข้อมูลบริบทเพิ่ม เช่น \"ผู้สร้างวิดีโอนี้กำลังโปรโมต...\"",
+                trap4Item2Title: "โค้ชฝึกการคิด (Coach)",
+                trap4Item2Desc: "AI \"ตั้งคำถาม\" นำทางให้เราวิเคราะห์ด้วยตนเอง \"เขามีแรงจูงใจแอบแฝงไหม?\"",
+                trap4Item3Title: "คู่หูสังเคราะห์ (Partner)",
+                trap4Item3Desc: "มนุษย์ \"ตั้งธง\" ด้วยสัญชาตญาณ และ AI \"สืบค้น\" เพื่อยืนยันหรือหักล้าง",
+                trap5Title: "กับดักที่ 5: เมื่อ ‘ยาถอนพิษ’ กลายเป็น ‘ม้าโทรจัน’ ตัวใหม่",
+                trap5Desc: "\"Rapport Paradox: Phase 2\" — กับดักสุดท้ายที่แยบยลที่สุด คือการที่ AI มี \"ความมีประโยชน์\" (Utility) จนเราเกิด \"ความเชื่อแบบเครื่องมือ\" (Instrumental Trust)",
+                trap5Flow1: "AI มีประโยชน์สูง",
+                trap5Flow2: "เกิดความเชื่อใจ (แบบเครื่องมือ)",
+                trap5Flow3: "เรา \"ลดการป้องกัน\"",
+                trap5Flow3Sub: "และหยุดตรวจสอบ AI",
+                footerTitle: "บทสรุป: คุณคือ ‘ผู้ขับเคลื่อน’",
+                footerDesc: "กับดักทั้ง 5 ทำงานประสานกันเป็นระบบเพื่อโจมตี \"สมองส่วนอารมณ์\" ของเรา ทางออกไม่ใช่การรอเครื่องมือที่สมบูรณ์แบบ แต่คือการใช้ AI เพื่อ \"อัปเกรด\" การคิดวิเคราะห์ของเราเอง",
+                footerBoxTitle: "จงเป็น ‘ผู้ขับเคลื่อน’ (Driver)",
+                footerBoxDesc: "ไม่ใช่ ‘ผู้โดยสาร’ (Passenger) ในกระบวนการคิดของตัวเอง",
+                galleryTitle: "แกลเลอรีรูปภาพ", // Kept for translation purposes but the h2 is removed.
+                galleryImg1Desc: "รูปภาพประกอบ 1", // Kept for translation purposes but the p is removed.
+                galleryImg2Desc: "รูปภาพประกอบ 2", // Kept for translation purposes but the p is removed.
+                chartRapport: {
+                    label: "องค์ประกอบของสายสัมพันธ์",
+                    labels: [
+                        ['การแสดงความ', 'เข้าอกเข้าใจ (Empathy)'], 
+                        'ความจริงใจ (Authenticity)', 
+                        'ความคล้ายคลึงกัน (Similarity)',
+                        ['ประสบการณ์ร่วม', '(Shared Experience)']
+                    ]
+                }
+            },
+            en: {
+                mainTitle: "Decode the 5 Brain Traps",
+                mainSubtitle: "That Social Media Uses to Control You",
+                introP1: "You're not stupid. You're just human.",
+                videoTitle: "The Video That Started It (Inspiration)",
+                videoDesc: "This video was the starting point for our conversation about the \"Rapport Paradox,\" which led to decoding the 5 traps in this infographic.",
+                riskTitle: "95% of Users Are At Risk",
+                riskDesc: "Platforms are designed to exploit basic psychological weaknesses, and most users lack the skills to keep up. They fall into 3 main groups:",
+                naiveTitle: "The Naive",
+                naiveDesc: "Lacks technological immunity; believes content easily.",
+                biasedTitle: "The Biased",
+                biasedDesc: "Uses perception to confirm their existing beliefs.",
+                rapportTitle: "The Rapport-Driven",
+                rapportDesc: "High immunity to data, but low immunity to relationships with influencers.",
+                trap1Title: "Trap 1: Instinct vs. Reason",
+                trap1Desc: "The real war is inside your brain. Algorithms are designed to feed emotion-driven content to \"System 1\" (Instinct) so it overrides \"System 2\" (Analytical Thinking).",
+                trap1Flow1: "Emotional Content",
+                trap1Flow1Sub: "(Social Feed)",
+                trap1Flow2: "System 1 (Instinct)",
+                trap1Flow2Sub: "Activated",
+                trap1Flow3: "System 2 (Reason)",
+                trap1Flow3Sub: "[ Bypassed ]",
+                trap2Title: "Trap 2: The Brain Trusts 'People', Not 'Data'",
+                trap2Desc: "The \"Rapport Paradox\" is the most powerful mechanism. We value \"relationships\" more than \"accuracy.\" Influencers build this via 4 key components.",
+                trap2ChartTitle: "The 4 Components of Rapport:",
+                trap2List1: "Empathy (\"I feel what you feel\")",
+                trap2List2: "Authenticity (Personal stories)",
+                trap2List3: "Similarity (\"I'm just like you\")",
+                trap2List4: "Shared Experience (A common journey)",
+                trap2Example: "<a href=\"https://youtu.be/1Y8gyIjlzIs?si=-hhv8ctuI1LXHrEM\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:underline\"><span class=\"font-bold text-brand-accent-orange\">Example:</span> The \"Time to leave Thailand\" video</a> seems sincere, but behind it is a sales pitch for a \"Move to Cambodia\" course. This is the Rapport Paradox in action.",
+                trap3Title: "Trap 3: The 'Comfortable Prison' of the Algorithm",
+                trap3Desc: "Algorithms don't show you \"truth,\" they show you \"what you want to see.\" They build an \"Echo Chamber\" that only confirms your existing bias.",
+                trap3Flow1: "You Like Content",
+                trap3Flow2: "Algorithm Works",
+                trap3Flow3: "Echo Chamber",
+                trap3Flow3Sub: "\"Everyone thinks like me\"",
+                trap4Title: "Trap 4: The Solution is a 'Brain Coach' (AI)",
+                trap4Desc: "Since the problem is emotional, facts alone fail. AI can be a \"vaccine\" to build the brain's immunity in 3 roles.",
+                trap4Item1Title: "Context Co-Pilot",
+                trap4Item1Desc: "AI \"nudges\" with context, e.g., \"FYI: This creator is promoting...\"",
+                trap4Item2Title: "Critical Thinking Coach",
+                trap4Item2Desc: "AI \"asks questions\" to guide your own analysis, \"Any hidden motives here?\"",
+                trap4Item3Title: "Hybrid Partner",
+                trap4Item3Desc: "Human \"flags\" with intuition, and AI \"research\" to confirm or deny.",
+                trap5Title: "Trap 5: When the 'Antidote' Becomes the New 'Trojan Horse'",
+                trap5Desc: "\"Rapport Paradox: Phase 2\" — The most subtle trap. AI's \"Utility\" is so high, we develop \"Instrumental Trust.\"",
+                trap5Flow1: "AI is Highly Useful",
+                trap5Flow2: "Instrumental Trust Forms",
+                trap5Flow3: "We \"Lower Our Guard\"",
+                trap5Flow3Sub: "And Stop Rechecking AI",
+                footerTitle: "Conclusion: You Are the 'Driver'",
+                footerDesc: "All 5 traps work systematically to target our emotional brain. The solution isn't a perfect tool, but using new tools like AI to \"upgrade\" our own critical thinking.",
+                footerBoxTitle: "Be the 'Driver'",
+                footerBoxDesc: "Not the 'Passenger' in your own thinking process.",
+                galleryTitle: "Image Gallery", // Kept for translation purposes but the h2 is removed.
+                galleryImg1Desc: "Image 1", // Kept for translation purposes but the p is removed.
+                galleryImg2Desc: "Image 2", // Kept for translation purposes but the p is removed.
+                chartRapport: {
+                    label: "Components of Rapport",
+                    labels: [
+                        ['Showing Empathy', '(Empathy)'],
+                        'Authenticity',
+                        'Similarity',
+                        ['Shared', 'Experience']
+                    ]
+                }
+            },
+            ru: {
+                mainTitle: "Расшифровка 5 ловушек мозга",
+                mainSubtitle: "Которые социальные сети используют для контроля над вами",
+                introP1: "Вы не глупы. Вы просто человек.",
+                videoTitle: "Видео, с которого все началось (Вдохновение)",
+                videoDesc: "Это видео стало отправной точкой для нашего разговора о \"Парадоксе взаимопонимания\" (Rapport Paradox), который привел к расшифровке 5 ловушек в этой инфографике.",
+                riskTitle: "95% пользователей в зоне риска",
+                riskDesc: "Платформы созданы для использования основных психологических слабостей, и у большинства пользователей не хватает навыков, чтобы противостоять этому. Они делятся на 3 основные группы:",
+                naiveTitle: "Наивные (The Naive)",
+                naiveDesc: "Отсутствует технологический иммунитет; легко верит контенту.",
+                biasedTitle: "Предвзятые (The Biased)",
+                biasedDesc: "Использует восприятие для подтверждения своих убеждений.",
+                rapportTitle: "Лояльные (The Rapport-Driven)",
+                rapportDesc: "Высокий иммунитет к данным, но низкий к отношениям с инфлюенсерами.",
+                trap1Title: "Ловушка 1: Инстинкт против Разума",
+                trap1Desc: "Настоящая война идет в вашем мозгу. Алгоритмы созданы, чтобы подавать эмоциональный контент \"Системе 1\" (Инстинкт), чтобы она подавляла \"Систему 2\" (Аналитическое мышление).",
+                trap1Flow1: "Эмоциональный контент",
+                trap1Flow1Sub: "(Лента соцсетей)",
+                trap1Flow2: "Система 1 (Инстинкт)",
+                trap1Flow2Sub: "Активирована",
+                trap1Flow3: "Система 2 (Разум)",
+                trap1Flow3Sub: "[ Игнорируется ]",
+                trap2Title: "Ловушка 2: Мозг верит 'людям', а не 'данным'",
+                trap2Desc: "\"Парадокс взаимопонимания\" (Rapport Paradox) — самый мощный механизм. Мы ценим \"отношения\" больше, чем \"точность\". Инфлюенсеры строят это на 4 компонентах.",
+                trap2ChartTitle: "4 компонента взаимопонимания:",
+                trap2List1: "Эмпатия (\"Я понимаю, что вы чувствуете\")",
+                trap2List2: "Искренность (Личные истории)",
+                trap2List3: "Сходство (\"Я такой же, как вы\")",
+                trap2List4: "Общий опыт (Общий путь)",
+                trap2Example: "<a href=\"https://youtu.be/1Y8gyIjlzIs?si=-hhv8ctuI1LXHrEM\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:underline\"><span class=\"font-bold text-brand-accent-orange\">Пример:</span> Видео \"Пора уезжать из Таиланда\"</a> кажется искренним, но за ним стоит продажа курса \"Переезд в Камбоджу\". Это и есть Парадокс взаимопонимания в действии.",
+                trap3Title: "Ловушка 3: 'Уютная тюрьма' алгоритма",
+                trap3Desc: "Алгоритмы показывают не \"правду\", а \"то, что вы хотите видеть\". Они строят \"Эхо-камеру\", которая только подтверждает вашу предвзятость.",
+                trap3Flow1: "Вам нравится контент",
+                trap3Flow2: "Алгоритм работает",
+                trap3Flow3: "Эхо-камера",
+                trap3Flow3Sub: "\"Все думают, как я\"",
+                trap4Title: "Ловушка 4: Решение — 'Тренер для мозга' (ИИ)",
+                trap4Desc: "Поскольку проблема эмоциональная, одни факты не работают. ИИ может стать \"вакциной\" для выработки иммунитета мозга в 3 ролях.",
+                trap4Item1Title: "Контекстный второй пилот",
+                trap4Item1Desc: "ИИ \"подсказывает\" контекст, например: \"Кстати: этот автор продвигает...\"",
+                trap4Item2Title: "Тренер по критическому мышлению",
+                trap4Item2Desc: "ИИ \"задает вопросы\", чтобы направить ваш анализ: \"Здесь есть скрытые мотивы?\"",
+                trap4Item3Title: "Гибридный партнер",
+                trap4Item3Desc: "Человек \"подозревает\" интуитивно, а ИИ \"исследует\", чтобы подтвердить или опровергнуть.",
+                trap5Title: "Ловушка 5: Когда 'противоядие' становится новым 'троянским конем'",
+                trap5Desc: "\"Парадокс взаимопонимания: Фаза 2\" — самая коварная ловушка. \"Полезность\" ИИ настолько высока, что мы развиваем \"Инструментальное доверие\".",
+                trap5Flow1: "ИИ очень полезен",
+                trap5Flow2: "Формируется инструментальное доверие",
+                trap5Flow3: "Мы \"теряем бдительность\"",
+                trap5Flow3Sub: "И перестаем проверять ИИ",
+                footerTitle: "Вывод: Вы — 'Водитель'",
+                footerDesc: "Все 5 ловушек системно атакуют наш эмоциональный мозг. Решение не в идеальном инструменте, а в использовании новых инструментов, таких как ИИ, для \"прокачки\" нашего критического мышления.",
+                footerBoxTitle: "Будьте 'Водителем'",
+                footerBoxDesc: "А не 'Пассажиром' в собственном процессе мышления.",
+                galleryTitle: "Галерея изображений", // Kept for translation purposes but the h2 is removed.
+                galleryImg1Desc: "Изображение 1", // Kept for translation purposes but the p is removed.
+                galleryImg2Desc: "Изображение 2", // Kept for translation purposes but the p is removed.
+                chartRapport: {
+                    label: "Компоненты взаимопонимания",
+                    labels: [
+                        ['Проявление эмпатии', '(Эмпатия)'],
+                        'Искренность',
+                        'Сходство',
+                        ['Общий', 'опыт']
+                    ]
+                }
+            },
+            zh: {
+                mainTitle: "解码5个大脑陷阱",
+                mainSubtitle: "社交媒体用来控制你的手段",
+                introP1: "你并不愚蠢。你只是人类。",
+                videoTitle: "一切的起点 (灵感来源)",
+                videoDesc: "这个视频是我们讨论“共情悖论” (Rapport Paradox) 的起点，并由此解码了本信息图中的5个陷阱。",
+                riskTitle: "95%的用户面临风险",
+                riskDesc: "平台被设计用来利用基本的心理弱点，而大多数用户缺乏跟上的技能。他们主要分为 3 类：",
+                naiveTitle: "天真者 (The Naive)",
+                naiveDesc: "缺乏技术免疫力；容易相信内容。",
+                biasedTitle: "偏执者 (The Biased)",
+                biasedDesc: "利用感知来证实自己已有的信念。",
+                rapportTitle: "共情驱动者 (The Rapport-Driven)",
+                rapportDesc: "对数据免疫力高，但对与网红的关系免疫力低。",
+                trap1Title: "陷阱 1：直觉 vs. 理性",
+                trap1Desc: "真正的战争发生在你的大脑内部。算法旨在将情绪驱动的内容“喂”给“系统1”（直觉），使其压倒“系统2”（分析性思维）。",
+                trap1Flow1: "情绪化内容",
+                trap1Flow1Sub: "（社交订阅）",
+                trap1Flow2: "系统1（直觉）",
+                trap1Flow2Sub: "被激活",
+                trap1Flow3: "系统2（理性）",
+                trap1Flow3Sub: "[ 被绕过 ]",
+                trap2Title: "陷阱 2：大脑相信‘人’，而非‘数据’",
+                trap2Desc: "“共情悖论” (Rapport Paradox) 是最强大的机制。我们更看重“关系”而非“准确性”。网红通过4个关键要素建立这种关系。",
+                trap2ChartTitle: "共情的4个组成部分：",
+                trap2List1: "同理心（“我懂你的感受”）",
+                trap2List2: "真实性（个人故事）",
+                trap2List3: "相似性（“我和你一样”）",
+                trap2List4: "共同经历（共同的旅程）",
+                trap2Example: "<a href=\"https://youtu.be/1Y8gyIjlzIs?si=-hhv8ctuI1LXHrEM\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:underline\"><span class=\"font-bold text-brand-accent-orange\">例如：</span> “是时候离开泰国了”的视频</a>看起来很真诚，但背后却是“搬到柬埔寨”课程的销售宣传。这就是共情悖論的实际应用。",
+                trap3Title: "陷阱 3：算法的‘舒适监狱’",
+                trap3Desc: "算法不向你展示“真相”，它们只展示“你想看的东西”。它们建立了一个“回音室”，只用于确认你已有的偏见。",
+                trap3Flow1: "你喜欢的内容",
+                trap3Flow2: "算法开始工作",
+                trap3Flow3: "回音室",
+                trap3Flow3Sub: "“每个人都和我想的一样”",
+                trap4Title: "陷阱 4：出路是‘大脑教练’ (AI)",
+                trap4Desc: "既然问题是情绪性的，仅靠事实是无效的。AI可以作为“疫苗”，通过3种角色帮助大脑建立免疫力。",
+                trap4Item1Title: "情境副驾驶 (Co-Pilot)",
+                trap4Item1Desc: "AI 用上下文“轻推”你，例如：“FYI：这个创作者正在推广...”",
+                trap4Item2Title: "批判性思维教练 (Coach)",
+                trap4Item2Desc: "AI “提出问题”来引导你进行自我分析，“这里有什么隐藏动机吗？”",
+                trap4Item3Title: "混合伙伴 (Partner)",
+                trap4Item3Desc: "人类用直觉“标记”问题，AI“研究”以证实或否认。",
+                trap5Title: "陷阱 5：当‘解药’成为新的‘特洛伊木马’",
+                trap5Desc: "“共情悖论：阶段2” — 最微妙的陷阱。AI的“实用性” (Utility) 如此之高，以至于我们产生了“工具性信任” (Instrumental Trust)。",
+                trap5Flow1: "AI 非常有用",
+                trap5Flow2: "工具性信任形成",
+                trap5Flow3: "我们“放松警惕”",
+                trap5Flow3Sub: "并停止复核 AI",
+                footerTitle: "结论：你是‘驾驶员’",
+                footerDesc: "所有 5 个陷阱都在系统地针对我们的情绪化大脑。解决方案不是一个完美的工具，而是使用像 AI 这样的新工具来“升级”我们自己的批判性思维。",
+                footerBoxTitle: "做‘驾驶员’",
+                footerBoxDesc: "而不是自己思维过程中的‘乘客’。",
+                galleryTitle: "图片库", // Kept for translation purposes but the h2 is removed.
+                galleryImg1Desc: "图片 1", // Kept for translation purposes but the p is removed.
+                galleryImg2Desc: "图片 2", // Kept for translation purposes but the p is removed.
+                chartRapport: {
+                    label: "共情的组成部分",
+                    labels: [
+                        ['表现出同理心', '(Empathy)'],
+                        '真实性 (Authenticity)',
+                        '相似性 (Similarity)',
+                        ['共同经历', '(Shared Experience)']
+                    ]
+                }
+            }
+        };
+
+        let rapportChart;
+        let currentLang = 'th';
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        function switchLanguage(lang) {
+            if (!translations[lang]) return;
+
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            const data = translations[lang];
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (data[key]) {
+                    // Only update if the element is not part of the removed gallery elements
+                    if (key !== 'galleryTitle' && key !== 'galleryImg1Desc' && key !== 'galleryImg2Desc') {
+                         el.innerHTML = data[key];
+                    } else if (key === 'galleryTitle' && el.tagName.toLowerCase() === 'h2') {
+                        el.innerHTML = ''; // Ensure the h2 is empty
+                    } else if ((key === 'galleryImg1Desc' || key === 'galleryImg2Desc') && el.tagName.toLowerCase() === 'p') {
+                        el.innerHTML = ''; // Ensure the p is empty
+                    }
+                }
+            });
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.classList.contains(lang)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            if (rapportChart && data.chartRapport) {
+                rapportChart.data.labels = data.chartRapport.labels;
+                rapportChart.data.datasets[0].label = data.chartRapport.label;
+                rapportChart.update();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const rapportCtx = document.getElementById('rapportDonutChart').getContext('2d');
+            const initialData = translations[currentLang].chartRapport;
+            
+            rapportChart = new Chart(rapportCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: initialData.labels,
+                    datasets: [{
+                        label: initialData.label,
+                        data: [30, 25, 20, 25],
+                        backgroundColor: [
+                            '#007BFF',
+                            '#FFC107',
+                            '#FD7E14',
+                            '#E83E8C'
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Sarabun',
+                                    size: 14
+                                },
+                                padding: 20,
+                                generateLabels: (chart) => {
+                                    const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    labels.forEach((label, index) => {
+                                        const dataLabel = chart.data.labels[index];
+                                        if (Array.isArray(dataLabel)) {
+                                            label.text = dataLabel.join(' ');
+                                        } else {
+                                            label.text = dataLabel;
+                                        }
+                                    });
+                                    return labels;
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            },
+                            bodyFont: {
+                                family: 'Sarabun'
+                            },
+                            titleFont: {
+                                family: 'Sarabun'
+                            }
+                        }
+                    }
+                }
+            });
+
+            switchLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>
+
