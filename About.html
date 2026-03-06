@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile - COPACABANA GROUP</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+/* ==========================================================================
+   CSS Variables & Tokens
+   ========================================================================== */
+:root {
+    /* Colors */
+    --color-primary: #CFAF70;
+    --color-primary-dark: #b0915add;
+    --color-dark: #121A21;
+    --color-darker: #0d1217;
+    --color-light: #F8F9FA;
+    --color-white: #FFFFFF;
+    --color-text: #4A5568;
+    --color-text-light: #A0AEC0;
+
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+
+    /* Transitions & Shadows */
+    --transition-fast: 0.3s ease;
+    --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-dark);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-fast);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.section-padding {
+    padding: var(--spacing-xl) 0;
+}
+
+.text-center { text-align: center; }
+.text-white { color: var(--color-white) !important; }
+.text-gold { color: var(--color-primary) !important; }
+.mt-4 { margin-top: var(--spacing-md); }
+.mt-6 { margin-top: 3rem; }
+.mt-8 { margin-top: var(--spacing-lg); }
+.mb-4 { margin-bottom: var(--spacing-md); }
+.relative { position: relative; }
+.z-10 { z-index: 10; }
+
+/* ==========================================================================
+   Typography Utilities
+   ========================================================================== */
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.eyebrow {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}
+
+.section-description {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--color-text);
+    font-size: 1.125rem;
+}
+
+/* ==========================================================================
+   Language Switcher
+   ========================================================================== */
+.lang-switcher {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.lang-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: var(--color-white);
+    border-radius: 4px;
+    box-shadow: var(--shadow-md);
+    min-width: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.lang-switcher.active .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.lang-option:hover,
+.lang-option.active {
+    background: var(--color-light);
+    color: var(--color-primary);
+}
+
+.navbar.scrolled .lang-btn {
+    color: var(--color-dark);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled .lang-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.coral-nav .lang-btn {
+    color: var(--color-dark);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.separator-line {
+    width: 60px;
+    height: 2px;
+    background-color: var(--color-primary);
+    margin: var(--spacing-sm) auto var(--spacing-md);
+}
+
+.separator-line-left {
+    width: 60px;
+    height: 2px;
+    background-color: var(--color-primary);
+    margin: var(--spacing-sm) 0 var(--spacing-md);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn-primary,
+.btn-outline {
+    display: inline-block;
+    padding: 12px 32px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-radius: 0;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: 1px solid var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+}
+
+.btn-primary.white {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    border-color: var(--color-white);
+}
+
+.btn-primary.white:hover {
+    background-color: transparent;
+    color: var(--color-white);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--color-white);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+.btn-outline.dark {
+    border-color: var(--color-dark);
+    color: var(--color-dark);
+}
+
+.btn-outline.dark:hover {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+.btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-white);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.btn-text::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-fast);
+}
+
+.btn-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 24px 0;
+    transition: all var(--transition-slow);
+}
+
+.navbar.scrolled {
+    background-color: var(--color-white);
+    padding: 16px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled .logo,
+.navbar.scrolled .nav-links a:not(.btn-outline),
+.navbar.scrolled .dropbtn {
+    color: var(--color-dark);
+}
+
+.navbar.scrolled .mobile-menu-btn {
+    color: var(--color-dark);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-white);
+    letter-spacing: 2px;
+    transition: color var(--transition-fast);
+}
+
+.logo .group-text {
+    font-weight: 400;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    letter-spacing: 4px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.nav-links a:not(.btn-outline) {
+    color: var(--color-white);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color var(--transition-fast);
+}
+
+.nav-links a:not(.btn-outline)::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+}
+
+.nav-links a:not(.btn-outline):hover::after {
+    transform: scaleX(1);
+}
+
+.mobile-menu-btn {
+    display: none;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--color-darker);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 40px;
+    transition: right var(--transition-slow);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-nav.active {
+    right: 0;
+}
+
+.mobile-nav-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.mobile-link {
+    color: var(--color-white);
+    font-size: 1.25rem;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+}
+
+.mobile-link:last-child {
+    border-bottom: none;
+    color: var(--color-primary);
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background-color: var(--color-dark);
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 0;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.05);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 0 20px;
+    z-index: 1;
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-white);
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   About Section
+   ========================================================================== */
+.about {
+    background-color: var(--color-white);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: var(--spacing-lg);
+}
+
+.about-heading {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-text-content p {
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+}
+.about-text-content ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+.about-text-content li {
+    font-size: 1.05rem;
+    color: var(--color-text);
+    margin-bottom: 0.8rem;
+    list-style-type: disc;
+    color: var(--color-primary);
+}
+.about-text-content li span {
+    color: var(--color-text);
+}
+
+.about-image-wrapper {
+    position: relative;
+}
+
+.about-image {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.about-image img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.about-image:hover img {
+    transform: scale(1.03);
+}
+
+.experience-badge {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-primary);
+    z-index: 2;
+}
+
+.experience-badge .number {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--color-primary);
+}
+
+.experience-badge .text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* ==========================================================================
+   Company Profile Styling
+   ========================================================================== */
+.bg-light {
+    background-color: var(--color-light);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.profile-card {
+    background: var(--color-white);
+    padding: 2.5rem;
+    border-radius: 4px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.profile-icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+}
+
+.profile-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--color-dark);
+}
+
+.profile-list-item {
+    text-align: left; 
+    margin-bottom: 0.5rem; 
+    list-style-type: disc; 
+    color: var(--color-primary);
+}
+
+.csr-banner {
+    background: var(--color-dark);
+    color: var(--color-white);
+    padding: 3rem;
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.csr-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(207, 175, 112, 0.1) 0%, rgba(18, 26, 33, 0) 100%);
+    z-index: 1;
+}
+
+.csr-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.csr-content h3 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.csr-content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   Projects Section
+   ========================================================================== */
+.projects {
+    background-color: var(--color-white);
+}
+
+.project-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 4rem;
+}
+
+.project-card.reverse {
+    grid-template-columns: 1fr 1.2fr;
+}
+
+.project-image {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 400px;
+}
+
+.project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-info {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-card.reverse .project-info {
+    order: -1;
+}
+
+.project-tag {
+    display: inline-block;
+    background-color: rgba(207, 175, 112, 0.1);
+    color: var(--color-primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.project-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-desc {
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.project-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.project-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text);
+}
+
+.project-features i {
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Showroom CTA
+   ========================================================================== */
+.showroom {
+    position: relative;
+    padding: 6rem 0;
+}
+
+.showroom-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-dark);
+    z-index: 1;
+}
+
+.showroom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at center, rgba(207, 175, 112, 0.1) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cfaf70' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.8;
+}
+
+.showroom-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.showroom-desc {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin: 1.5rem 0 2rem;
+}
+
+/* ==========================================================================
+   News Section
+   ========================================================================== */
+.news {
+    background-color: var(--color-light);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.news-card {
+    background-color: var(--color-white);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-md);
+}
+
+.news-image-placeholder {
+    height: 200px;
+    background-color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.news-image-placeholder::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.news-card:hover .news-image-placeholder::after {
+    transform: translateX(100%);
+}
+
+.news-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.news-tags span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-primary);
+    background-color: rgba(207, 175, 112, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.news-title {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.read-more {
+    color: var(--color-primary);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.news-card:hover .read-more {
+    color: var(--color-dark);
+}
+
+.read-more i {
+    transition: transform var(--transition-fast);
+}
+
+.news-card:hover .read-more i {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+    background-color: var(--color-darker);
+    color: var(--color-text-light);
+    padding-top: 5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.footer h3 {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links ul li a:hover {
+    color: var(--color-primary);
+    padding-left: 5px;
+}
+
+.footer-contact ul li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.footer-contact i {
+    color: var(--color-primary);
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-white);
+    transition: var(--transition-fast);
+}
+
+.social-links a:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-legal a:hover {
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Animations & Interactivity
+   ========================================================================== */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+.fade-left {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-right {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+
+.is-visible {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* ==========================================================================
+   Dropdown menu
+   ========================================================================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 4px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    transition: color var(--transition-fast);
+}
+
+.dropbtn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+}
+
+.dropdown:hover .dropbtn::after {
+    transform: scaleX(1);
+}
+
+.dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: var(--color-white);
+    min-width: 220px;
+    box-shadow: var(--shadow-md);
+    z-index: 1002;
+    border-radius: 4px;
+    top: 100%;
+    left: 0;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all var(--transition-fast);
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    color: var(--color-dark) !important;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem !important;
+    text-transform: none;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all var(--transition-fast);
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary) !important;
+    padding-left: 25px;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .hero-title { font-size: 3.5rem; }
+    .about-grid, .project-card, .project-card.reverse {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .about-image-wrapper { margin-left: 30px; }
+    .project-info { padding: 3rem 2rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 992px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    .hero-title { font-size: 2.5rem; }
+    .section-title { font-size: 2rem; }
+    .news-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .experience-badge {
+        left: 0; bottom: 0;
+        transform: translate(10%, 10%);
+        padding: 1.5rem;
+    }
+    .profile-grid { grid-template-columns: 1fr; }
+    .csr-banner { padding: 2rem 1.5rem; }
+}
+
+@media (max-width: 576px) {
+    .hero-actions { flex-direction: column; gap: 1rem; }
+    .news-grid { grid-template-columns: 1fr; }
+    .project-features { grid-template-columns: 1fr; }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">COPACABANA <br><span class="group-text">GROUP</span></a>
+            
+            <div class="nav-links">
+                <a href="#home" data-i18n="nav_home">Home</a>
+                <a href="#about" data-i18n="nav_about">About Us</a>
+                
+                <div class="dropdown">
+                    <button class="dropbtn"><span data-i18n="nav_profile">Profile</span> <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-top: 2px;"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#vision" data-i18n="nav_vision">Vision & Mission</a>
+                        <a href="#csr" data-i18n="nav_csr">Corporate Social Responsibility</a>
+                    </div>
+                </div>
+
+                <a href="#projects" data-i18n="nav_projects">Projects</a>
+                
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-btn" onclick="toggleLang()">
+                        <i class="fas fa-globe"></i> <span id="currentLang">EN</span> <i class="fas fa-caret-down" style="font-size: 0.7rem;"></i>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option active" onclick="setLanguage('en', event)">English</button>
+                        <button class="lang-option" onclick="setLanguage('th', event)">ภาษาไทย</button>
+                        <button class="lang-option" onclick="setLanguage('ru', event)">Русский</button>
+                        <button class="lang-option" onclick="setLanguage('zh', event)">中文</button>
+                    </div>
+                </div>
+
+                <a href="#contact" class="btn-outline" style="padding: 8px 24px;" data-i18n="nav_contact">Contact</a>
+            </div>
+
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-close" onclick="toggleMobileMenu()">
+            <i class="fas fa-times"></i>
+        </div>
+        <a href="#home" class="mobile-link" onclick="toggleMobileMenu()" data-i18n="nav_home">Home</a>
+        <a href="#about" class="mobile-link" onclick="toggleMobileMenu()" data-i18n="nav_about">About Us</a>
+        <a href="#projects" class="mobile-link" onclick="toggleMobileMenu()" data-i18n="nav_projects">Projects</a>
+        <a href="#contact" class="mobile-link" onclick="toggleMobileMenu()" data-i18n="nav_contact">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="hero-slide active">
+                <img src="https://i.postimg.cc/6Qpz1s2C/Copy_of_DJI_0655.jpg" alt="Luxury Living">
+            </div>
+            <div class="hero-slide">
+                <img src="https://i.postimg.cc/9QpJpXMW/Copy_of_DSC09069-HDR_copy.jpg" alt="Modern Architecture">
+            </div>
+            <div class="hero-slide">
+                <img src="https://i.postimg.cc/DyT9YgFr/Change_to_afternoon_2k_202512291155.jpg" alt="Copacabana Afternoon">
+            </div>
+            <div class="hero-slide">
+                <img src="https://i.postimg.cc/kMKrcH00/Change_to_the_2k_202512291200.jpg" alt="Copacabana Exterior">
+            </div>
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content fade-up">
+            <span class="hero-subtitle" data-i18n="hero_sub">Welcome to Excellence</span>
+            <h1 class="hero-title" data-i18n="hero_title">Discover Our Story</h1>
+            <p class="hero-description" data-i18n="hero_desc">Experience the pinnacle of coastal elegance in Pattaya. A trusted leader in luxury property development for over 20 years.</p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn-primary" data-i18n="hero_btn1">Explore Projects</a>
+                <a href="#about" class="btn-text"><span data-i18n="hero_btn2">About Us</span> <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-padding about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text fade-right">
+                    <span class="eyebrow" data-i18n="about_eyebrow">About Copacabana Group</span>
+                    <h2 class="about-heading" data-i18n="about_heading">A Luxury Destination in Pattaya</h2>
+                    <div class="separator-line-left"></div>
+                    <div class="about-text-content">
+                        <p data-i18n="about_desc">With over 20 years of experience in Pattaya's thriving real estate market, Copacabana Group has earned its reputation as a leader in luxury property development.</p>
+                        <p data-i18n="about_journey_title">Our Journey & Milestones:</p>
+                        <ul>
+                            <li class="profile-list-item"><span data-i18n="about_list1" style="color: var(--color-text);"><strong>Trusted Agent:</strong> Started with land sales and became the sole agent for iconic projects like Riviera Jomtien, Venetian Jomtien, and more.</span></li>
+                            <li class="profile-list-item"><span data-i18n="about_list2" style="color: var(--color-text);"><strong>First Flagship Project:</strong> Launched <em>Copacabana Beach Jomtien</em>, a breakthrough beachfront development recognized for innovative design and numerous awards.</span></li>
+                            <li class="profile-list-item"><span data-i18n="about_list3" style="color: var(--color-text);"><strong>Latest Venture:</strong> Currently developing <em>Copacabana Coral Reef Jomtien</em>, promising to be another landmark in our prestigious portfolio.</span></li>
+                            <li class="profile-list-item"><span data-i18n="about_list4" style="color: var(--color-text);"><strong>Our Passion:</strong> Dedicated to delivering world-class designs, luxury living spaces, and exceptional investment opportunities for our clients.</span></li>
+                        </ul>
+                        <a href="#profile" class="btn-outline dark mt-4" data-i18n="about_btn">Read Our Profile</a>
+                    </div>
+                </div>
+                <div class="about-image-wrapper fade-left delay-1">
+                    <div class="about-image">
+                        <img src="https://i.postimg.cc/VvnBF8X6/Copy_of_Insentive_ห้อง_35sqm-gigapixel-high_fidelity_v2-1.4x.jpg" alt="Copacabana Interior">
+                        <div class="experience-badge">
+                            <span class="number">20+</span>
+                            <span class="text" data-i18n="about_badge">Years of<br>Experience</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Profile Section -->
+    <section class="section-padding bg-light" id="profile" style="scroll-margin-top: 80px;">
+        <div class="container" id="vision">
+            <div class="text-center fade-up">
+                <span class="eyebrow" data-i18n="profile_eyebrow">Our Core</span>
+                <h2 class="section-title" data-i18n="profile_title">Vision & Mission</h2>
+                <div class="separator-line"></div>
+            </div>
+            
+            <div class="profile-grid mt-6 mb-4 fade-up delay-1" style="grid-template-columns: repeat(2, 1fr);">
+                <!-- Vision Card -->
+                <div class="profile-card">
+                    <i class="fas fa-eye profile-icon"></i>
+                    <h3 data-i18n="profile_vision_title">Our Vision</h3>
+                    <p data-i18n="profile_vision_quote" style="font-weight: 600; font-style: italic; color: var(--color-primary); margin-bottom: 1rem;">"Determination, honesty, and sincerity"</p>
+                    <p data-i18n="profile_vision_desc" style="text-align: left; font-size: 0.95rem;">As a leading real estate development company in Pattaya, we are dedicated to creating exceptional accommodations that symbolize success. With unwavering determination, honesty, and sincerity, we strive to provide our customers with the highest quality living experiences.</p>
+                </div>
+
+                <!-- Mission Card -->
+                <div class="profile-card">
+                    <i class="fas fa-bullseye profile-icon"></i>
+                    <h3 data-i18n="profile_mission_title">Our Mission</h3>
+                    <ul style="padding-left: 1.5rem; margin-top: 1rem;">
+                        <li class="profile-list-item"><span data-i18n="profile_mission_1" style="color: var(--color-text); font-size: 0.95rem;"><strong>Customer Focus:</strong> Create luxurious and comfortable accommodations that exceed customer expectations.</span></li>
+                        <li class="profile-list-item"><span data-i18n="profile_mission_2" style="color: var(--color-text); font-size: 0.95rem;"><strong>Design Excellence:</strong> Design spaces that are both functional and aesthetically pleasing.</span></li>
+                        <li class="profile-list-item"><span data-i18n="profile_mission_3" style="color: var(--color-text); font-size: 0.95rem;"><strong>Team Empowerment:</strong> Foster a positive work environment and prioritize the development of our personnel.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CSR Banner -->
+            <div class="csr-banner mt-8 fade-up" id="csr">
+                <div class="csr-content">
+                    <h3 data-i18n="csr_title">Social Responsibility</h3>
+                    <p data-i18n="csr_desc">We are committed to contributing positively to society and enhancing the quality of life for our community. Through dedicated initiatives and thoughtful development, we aim to create a thriving and successful environment for everyone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section-padding projects" id="projects">
+        <div class="container">
+            <div class="text-center fade-up">
+                <span class="eyebrow" data-i18n="proj_eyebrow">Our Portfolio</span>
+                <h2 class="section-title" data-i18n="proj_title">Featured Developments</h2>
+                <div class="separator-line"></div>
+                <p class="section-description mb-4" data-i18n="proj_desc">Explore our exclusive collection of premium residences, pushing the boundaries of real estate in Pattaya.</p>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-card mt-8 fade-up">
+                <div class="project-image">
+                    <img src="https://i.postimg.cc/m2S7ZVw0/DJI_0306.jpg" alt="Copacabana Beach Jomtien">
+                </div>
+                <div class="project-info">
+                    <span class="project-tag" data-i18n="proj1_tag">Flagship Project</span>
+                    <h3 class="project-title" data-i18n="proj1_title">Copacabana Beach Jomtien</h3>
+                    <p class="project-desc" data-i18n="proj1_desc">Our stunning beachfront breakthrough development. Recognized not only for its exceptional sales performance but also for its innovative design and high-quality construction. Honored with numerous awards.</p>
+                    <ul class="project-features">
+                        <li><i class="fas fa-trophy"></i> <span data-i18n="proj1_feat1">Multi-Award Winning</span></li>
+                        <li><i class="fas fa-umbrella-beach"></i> <span data-i18n="proj1_feat2">Prime Beachfront Living</span></li>
+                        <li><i class="fas fa-swimming-pool"></i> <span data-i18n="proj1_feat3">Luxury Facilities</span></li>
+                        <li><i class="fas fa-chart-line"></i> <span data-i18n="proj1_feat4">Exceptional Investment</span></li>
+                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="#" class="btn-primary" data-i18n="proj1_btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card reverse fade-up">
+                <div class="project-image">
+                    <img src="https://i.postimg.cc/1t8H6HqN/hf_20260126_065917_039a5413_5e3e_4262_a102_73aa17fe1582.jpg" alt="Coral Reef By Copacabana">
+                </div>
+                <div class="project-info">
+                    <span class="project-tag" data-i18n="proj2_tag">Newest Venture</span>
+                    <h3 class="project-title" data-i18n="proj2_title">Copacabana Coral Reef Jomtien</h3>
+                    <p class="project-desc" data-i18n="proj2_desc">Our latest exciting venture, promising to be another landmark development in our prestigious portfolio. Delivering world-class designs and exceptional investment opportunities.</p>
+                    <ul class="project-features">
+                        <li><i class="fas fa-building"></i> <span data-i18n="proj2_feat1">59 Floors (1,644 Units)</span></li>
+                        <li><i class="fas fa-water"></i> <span data-i18n="proj2_feat2">Sea View Every Unit</span></li>
+                        <li><i class="fas fa-bed"></i> <span data-i18n="proj2_feat3">1 Bed / 1 Bed Plus / 2 Bed</span></li>
+                        <li><i class="fas fa-map-marked-alt"></i> <span data-i18n="proj2_feat4">9 Rai Land Size</span></li>
+                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="#" class="btn-primary" data-i18n="proj2_btn">Register Interest</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showroom CTA -->
+    <section class="showroom text-center fade-in">
+        <div class="showroom-bg"></div>
+        <div class="showroom-overlay"></div>
+        <div class="showroom-content container relative z-10 text-white">
+            <span class="eyebrow text-gold" data-i18n="cta_eyebrow">Be Part of Something Great</span>
+            <h2 class="section-title text-white" data-i18n="cta_title">Register With Us Today</h2>
+            <p class="showroom-desc" data-i18n="cta_desc">Enjoy special offers and exclusive hotel deals when you book directly. Discover the best in beachfront living.</p>
+            <a href="#contact" class="btn-primary" data-i18n="cta_btn">Register Now</a>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section-padding news" id="news">
+        <div class="container">
+            <div class="text-center fade-up">
+                <span class="eyebrow" data-i18n="news_eyebrow">Stay Updated</span>
+                <h2 class="section-title" data-i18n="news_title">Latest News & Events</h2>
+                <div class="separator-line"></div>
+            </div>
+
+            <div class="news-grid">
+                <!-- News 1 -->
+                <div class="news-card fade-up">
+                    <div class="news-image-placeholder">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-tags">
+                            <span data-i18n="news_tag_awards">Awards</span>
+                            <span>2026</span>
+                        </div>
+                        <h3 class="news-title" data-i18n="news1_title">Copacabana Beach Jomtien Honored with Numerous Awards</h3>
+                        <a href="#" class="read-more"><span data-i18n="news_readmore">Read Article</span> <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News 2 -->
+                <div class="news-card fade-up delay-1">
+                    <div class="news-image-placeholder">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-tags">
+                            <span data-i18n="news_tag_update">Project Update</span>
+                        </div>
+                        <h3 class="news-title" data-i18n="news2_title">Introducing Copacabana Coral Reef Jomtien</h3>
+                        <a href="#" class="read-more"><span data-i18n="news_readmore">Read Article</span> <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- News 3 -->
+                <div class="news-card fade-up delay-2">
+                    <div class="news-image-placeholder">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-tags">
+                            <span data-i18n="news_tag_promo">Promotion</span>
+                        </div>
+                        <h3 class="news-title" data-i18n="news3_title">Exclusive Offers for Direct Bookings & Newsletter Subscribers</h3>
+                        <a href="#" class="read-more"><span data-i18n="news_readmore">Read Article</span> <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand fade-up">
+                    <a href="#" class="logo mb-4" style="display: block;">COPACABANA <br><span class="group-text">GROUP</span></a>
+                    <p style="margin-top: 1.5rem; max-width: 300px;" data-i18n="footer_desc">Setting the standard for luxury living and architectural excellence in the heart of Thailand's Eastern Seaboard.</p>
+                </div>
+                
+                <div class="footer-links fade-up delay-1">
+                    <h3 data-i18n="footer_quicklinks">Quick Links</h3>
+                    <ul>
+                        <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="#about" data-i18n="nav_about">About Us</a></li>
+                        <li><a href="#projects" data-i18n="footer_link_proj">Our Projects</a></li>
+                        <li><a href="#news" data-i18n="footer_link_news">News & Articles</a></li>
+                        <li><a href="#profile" data-i18n="nav_vision">Vision & Mission</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact fade-up delay-2">
+                    <h3 data-i18n="footer_contact">Contact Us (Sales Office)</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-i18n="footer_address">385/16 Moo 12 Nongprue Banglamung Chonburi 20150</span></li>
+                        <li><i class="fas fa-phone-alt"></i> <span data-i18n="footer_office">Office: +66 (0) 38 225-374</span></li>
+                        <li><i class="fas fa-mobile-alt"></i> <span data-i18n="footer_mobile">Mobile: +66 (0) 95 945 1665</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>info.coral@copacabanacoralreef.com</span></li>
+                    </ul>
+                    <div class="social-links mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-line"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">&copy; 2026 Copacabana Group. All Rights Reserved.</p>
+                <div class="footer-legal">
+                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer_terms">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Sticky Navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Language Switcher Toggle
+        function toggleLang() {
+            const switcher = document.getElementById('langSwitcher');
+            switcher.classList.toggle('active');
+        }
+
+        // Close lang dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.lang-btn') && !event.target.matches('.lang-btn *')) {
+                const switchers = document.getElementsByClassName("lang-switcher");
+                for (let i = 0; i < switchers.length; i++) {
+                    let openDropdown = switchers[i];
+                    if (openDropdown.classList.contains('active')) {
+                        openDropdown.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        // Simple Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        if(slides.length > 1) {
+            setInterval(nextSlide, 5000);
+        }
+
+        // Scroll Animation Observer (Fade up/left/right)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .fade-in, .fade-left, .fade-right').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // --- FULL Multi-language System ---
+        const i18n = {
+            en: {
+                nav_home: "Home", nav_about: "About Us", nav_profile: "Profile", nav_vision: "Vision & Mission", nav_csr: "Social Responsibility", nav_projects: "Projects", nav_contact: "Contact",
+                hero_sub: "Welcome to Excellence", hero_title: "Discover Our Story", hero_desc: "Experience the pinnacle of coastal elegance in Pattaya. A trusted leader in luxury property development for over 20 years.", hero_btn1: "Explore Projects", hero_btn2: "About Us",
+                about_eyebrow: "About Copacabana Group", about_heading: "A Luxury Destination in Pattaya", about_desc: "With over 20 years of experience in Pattaya's thriving real estate market, Copacabana Group has earned its reputation as a leader in luxury property development.", about_journey_title: "Our Journey & Milestones:", about_list1: "<strong>Trusted Agent:</strong> Started with land sales and became the sole agent for iconic projects like Riviera Jomtien, Venetian Jomtien, and more.", about_list2: "<strong>First Flagship Project:</strong> Launched <em>Copacabana Beach Jomtien</em>, a breakthrough beachfront development recognized for innovative design and numerous awards.", about_list3: "<strong>Latest Venture:</strong> Currently developing <em>Copacabana Coral Reef Jomtien</em>, promising to be another landmark in our prestigious portfolio.", about_list4: "<strong>Our Passion:</strong> Dedicated to delivering world-class designs, luxury living spaces, and exceptional investment opportunities for our clients.", about_btn: "Read Our Profile", about_badge: "Years of<br>Experience",
+                profile_eyebrow: "Our Core", profile_title: "Vision & Mission", profile_vision_title: "Our Vision", profile_vision_quote: '"Determination, honesty, and sincerity"', profile_vision_desc: "As a leading real estate development company in Pattaya, we are dedicated to creating exceptional accommodations that symbolize success. With unwavering determination, honesty, and sincerity, we strive to provide our customers with the highest quality living experiences.", profile_mission_title: "Our Mission", profile_mission_1: "<strong>Customer Focus:</strong> Create luxurious and comfortable accommodations that exceed customer expectations.", profile_mission_2: "<strong>Design Excellence:</strong> Design spaces that are both functional and aesthetically pleasing.", profile_mission_3: "<strong>Team Empowerment:</strong> Foster a positive work environment and prioritize the development of our personnel.",
+                csr_title: "Social Responsibility", csr_desc: "We are committed to contributing positively to society and enhancing the quality of life for our community. Through dedicated initiatives and thoughtful development, we aim to create a thriving and successful environment for everyone.",
+                proj_eyebrow: "Our Portfolio", proj_title: "Featured Developments", proj_desc: "Explore our exclusive collection of premium residences, pushing the boundaries of real estate in Pattaya.",
+                proj1_tag: "Flagship Project", proj1_title: "Copacabana Beach Jomtien", proj1_desc: "Our stunning beachfront breakthrough development. Recognized not only for its exceptional sales performance but also for its innovative design and high-quality construction. Honored with numerous awards.", proj1_feat1: "Multi-Award Winning", proj1_feat2: "Prime Beachfront Living", proj1_feat3: "Luxury Facilities", proj1_feat4: "Exceptional Investment", proj1_btn: "View Details",
+                proj2_tag: "Newest Venture", proj2_title: "Copacabana Coral Reef Jomtien", proj2_desc: "Our latest exciting venture, promising to be another landmark development in our prestigious portfolio. Delivering world-class designs and exceptional investment opportunities.", proj2_feat1: "59 Floors (1,644 Units)", proj2_feat2: "Sea View Every Unit", proj2_feat3: "1 Bed / 1 Bed Plus / 2 Bed", proj2_feat4: "9 Rai Land Size", proj2_btn: "Register Interest",
+                cta_eyebrow: "Be Part of Something Great", cta_title: "Register With Us Today", cta_desc: "Enjoy special offers and exclusive hotel deals when you book directly. Discover the best in beachfront living.", cta_btn: "Register Now",
+                news_eyebrow: "Stay Updated", news_title: "Latest News & Events", news_tag_awards: "Awards", news_tag_update: "Project Update", news_tag_promo: "Promotion", news1_title: "Copacabana Beach Jomtien Honored with Numerous Awards", news2_title: "Introducing Copacabana Coral Reef Jomtien", news3_title: "Exclusive Offers for Direct Bookings & Newsletter Subscribers", news_readmore: "Read Article",
+                footer_desc: "Setting the standard for luxury living and architectural excellence in the heart of Thailand's Eastern Seaboard.", footer_quicklinks: "Quick Links", footer_link_proj: "Our Projects", footer_link_news: "News & Articles", footer_contact: "Contact Us (Sales Office)", footer_address: "385/16 Moo 12 Nongprue Banglamung Chonburi 20150", footer_office: "Office: +66 (0) 38 225-374", footer_mobile: "Mobile: +66 (0) 95 945 1665", footer_copyright: "&copy; 2026 Copacabana Group. All Rights Reserved.", footer_privacy: "Privacy Policy", footer_terms: "Terms of Use"
+            },
+            th: {
+                nav_home: "หน้าแรก", nav_about: "เกี่ยวกับเรา", nav_profile: "ข้อมูลองค์กร", nav_vision: "วิสัยทัศน์ & พันธกิจ", nav_csr: "ความรับผิดชอบต่อสังคม", nav_projects: "โครงการ", nav_contact: "ติดต่อเรา",
+                hero_sub: "ยินดีต้อนรับสู่ความเป็นเลิศ", hero_title: "ค้นพบเรื่องราวของเรา", hero_desc: "สัมผัสความสง่างามระดับพรีเมียมริมชายฝั่งพัทยา ผู้นำที่ได้รับความไว้วางใจในการพัฒนาอสังหาริมทรัพย์ระดับหรูมากว่า 20 ปี", hero_btn1: "สำรวจโครงการ", hero_btn2: "เกี่ยวกับเรา",
+                about_eyebrow: "เกี่ยวกับ โคปาคาบาน่า กรุ๊ป", about_heading: "จุดหมายปลายทางแห่งความหรูหราในพัทยา", about_desc: "ด้วยประสบการณ์กว่า 20 ปีในตลาดอสังหาริมทรัพย์ที่เติบโตอย่างรวดเร็วของพัทยา โคปาคาบาน่า กรุ๊ป ได้รับการยอมรับในฐานะผู้นำด้านการพัฒนาโครงการที่อยู่อาศัยระดับลักชัวรี", about_journey_title: "เส้นทางแห่งความสำเร็จ:", about_list1: "<strong>ตัวแทนที่น่าเชื่อถือ:</strong> เริ่มต้นจากการเป็นตัวแทนขายและบริหารโครงการชั้นนำระดับแนวหน้าในพัทยา อาทิ Riviera Jomtien, Venetian Jomtien และอื่นๆ", about_list2: "<strong>โครงการแฟลกชิปแรก:</strong> เปิดตัวโครงการ <em>Copacabana Beach Jomtien</em> ซึ่งประสบความสำเร็จอย่างสูง ทั้งด้านยอดขายและกวาดรางวัลการออกแบบมากมาย", about_list3: "<strong>โครงการล่าสุด:</strong> ปัจจุบันกำลังพัฒนา <em>Copacabana Coral Reef Jomtien</em> ที่เตรียมพร้อมขึ้นเป็นแลนด์มาร์คแห่งใหม่ของเมืองพัทยา", about_list4: "<strong>ความมุ่งมั่นของเรา:</strong> ส่งมอบดีไซน์ระดับโลก พื้นที่อยู่อาศัยที่หรูหรา และมอบโอกาสการลงทุนที่ยอดเยี่ยมที่สุดให้กับลูกค้า", about_btn: "อ่านโปรไฟล์องค์กร", about_badge: "ปีแห่ง<br>ประสบการณ์",
+                profile_eyebrow: "หัวใจหลักของเรา", profile_title: "วิสัยทัศน์ & พันธกิจ", profile_vision_title: "วิสัยทัศน์", profile_vision_quote: '"มุ่งมั่น ซื่อสัตย์ และจริงใจ"', profile_vision_desc: "ในฐานะบริษัทพัฒนาอสังหาริมทรัพย์ชั้นนำในพัทยา เราทุ่มเทในการสร้างสรรค์ที่พักอาศัยที่เหนือระดับอันเป็นสัญลักษณ์ของความสำเร็จ ด้วยความมุ่งมั่น ซื่อสัตย์ และจริงใจ เราพร้อมมอบประสบการณ์การอยู่อาศัยที่มีคุณภาพสูงสุดให้แก่ลูกค้าของเรา", profile_mission_title: "พันธกิจ", profile_mission_1: "<strong>ใส่ใจลูกค้า:</strong> สร้างสรรค์ที่พักอาศัยสุดหรูและสะดวกสบาย ตอบโจทย์เกินความคาดหมายของลูกค้าเสมอ", profile_mission_2: "<strong>การออกแบบที่เป็นเลิศ:</strong> ออกแบบพื้นที่ให้ใช้งานได้อย่างสมบูรณ์แบบ ควบคู่ไปกับความสวยงามที่ลงตัว", profile_mission_3: "<strong>ส่งเสริมทีมงาน:</strong> สร้างสภาพแวดล้อมการทำงานเชิงบวก และให้ความสำคัญกับการพัฒนาบุคลากรเป็นหลัก",
+                csr_title: "ความรับผิดชอบต่อสังคม", csr_desc: "เรามุ่งมั่นที่จะมีส่วนร่วมเชิงบวกต่อสังคม และยกระดับคุณภาพชีวิตของคนในชุมชน ผ่านโครงการต่างๆ และการพัฒนาอย่างใส่ใจ เพื่อสร้างสภาพแวดล้อมที่เติบโตและยั่งยืนสำหรับทุกคน",
+                proj_eyebrow: "ผลงานของเรา", proj_title: "โครงการเด่น", proj_desc: "สำรวจคอลเลกชันที่พักอาศัยระดับพรีเมียมของเรา ที่ยกระดับมาตรฐานอสังหาริมทรัพย์ในพัทยา",
+                proj1_tag: "โครงการระดับแฟลกชิป", proj1_title: "Copacabana Beach Jomtien", proj1_desc: "ความสำเร็จของคอนโดมิเนียมริมหาดสุดอลังการของเรา โดดเด่นไม่เพียงแค่ยอดขายที่ยอดเยี่ยม แต่ยังรวมถึงการออกแบบที่ล้ำสมัยและมาตรฐานการก่อสร้างระดับสูง การันตีด้วยรางวัลมากมาย", proj1_feat1: "รางวัลการันตีมากมาย", proj1_feat2: "ติดหาดทำเลทอง", proj1_feat3: "สิ่งอำนวยความสะดวกสุดหรู", proj1_feat4: "โอกาสการลงทุนชั้นเลิศ", proj1_btn: "ดูรายละเอียด",
+                proj2_tag: "โครงการใหม่ล่าสุด", proj2_title: "Copacabana Coral Reef Jomtien", proj2_desc: "โครงการระดับแลนด์มาร์คแห่งใหม่ล่าสุดของเรา พร้อมส่งมอบดีไซน์ระดับเวิลด์คลาส และศักยภาพการลงทุนที่เหนือกว่าให้กับคุณ", proj2_feat1: "59 ชั้น (1,644 ยูนิต)", proj2_feat2: "วิวทะเลทุกยูนิต", proj2_feat3: "1 ห้องนอน / 1 ห้องนอนพลัส / 2 ห้องนอน", proj2_feat4: "ขนาดที่ดิน 9 ไร่", proj2_btn: "ลงทะเบียนความสนใจ",
+                cta_eyebrow: "ร่วมเป็นส่วนหนึ่งในความสำเร็จ", cta_title: "ลงทะเบียนกับเราวันนี้", cta_desc: "รับข้อเสนอพิเศษและดีลสุดเอ็กซ์คลูซีฟเมื่อจองโดยตรงกับเรา สัมผัสชีวิตริมชายหาดที่ดีที่สุด", cta_btn: "ลงทะเบียน",
+                news_eyebrow: "ติดตามข่าวสาร", news_title: "ข่าวสาร & กิจกรรมล่าสุด", news_tag_awards: "รางวัล", news_tag_update: "ความคืบหน้าโครงการ", news_tag_promo: "โปรโมชั่น", news1_title: "Copacabana Beach Jomtien คว้าหลากหลายรางวัลเกียรติยศ", news2_title: "เปิดตัวโครงการใหม่ Copacabana Coral Reef Jomtien", news3_title: "ข้อเสนอสุดพิเศษสำหรับลูกค้าที่จองตรงและรับข่าวสารจากเรา", news_readmore: "อ่านบทความ",
+                footer_desc: "กำหนดมาตรฐานใหม่สำหรับการอยู่อาศัยระดับลักชัวรี และความเป็นเลิศด้านสถาปัตยกรรม ในใจกลางเขตเศรษฐกิจภาคตะวันออกของไทย", footer_quicklinks: "ลิงก์ด่วน", footer_link_proj: "โครงการของเรา", footer_link_news: "ข่าวสารและบทความ", footer_contact: "ติดต่อเรา (สำนักงานขาย)", footer_address: "385/16 หมู่ 12 หนองปรือ บางละมุง ชลบุรี 20150", footer_office: "โทรศัพท์: +66 (0) 38 225-374", footer_mobile: "มือถือ: +66 (0) 95 945 1665", footer_copyright: "&copy; 2026 Copacabana Group. สงวนลิขสิทธิ์", footer_privacy: "นโยบายความเป็นส่วนตัว", footer_terms: "ข้อกำหนดและเงื่อนไข"
+            },
+            ru: {
+                nav_home: "Главная", nav_about: "О нас", nav_profile: "Профиль", nav_vision: "Видение и Миссия", nav_csr: "Соц. ответственность", nav_projects: "Проекты", nav_contact: "Контакты",
+                hero_sub: "Добро пожаловать в совершенство", hero_title: "Узнайте нашу историю", hero_desc: "Испытайте вершину прибрежной элегантности в Паттайе. Надежный лидер в развитии элитной недвижимости более 20 лет.", hero_btn1: "Смотреть проекты", hero_btn2: "О нас",
+                about_eyebrow: "О Copacabana Group", about_heading: "Роскошное направление в Паттайе", about_desc: "Имея более чем 20-летний опыт работы на рынке недвижимости Паттайи, Copacabana Group заслужила репутацию лидера в сфере элитной недвижимости.", about_journey_title: "Наш путь и достижения:", about_list1: "<strong>Надежный агент:</strong> Начинали с продаж земли и стали эксклюзивным агентом для знаковых проектов, таких как Riviera Jomtien, Venetian Jomtien и других.", about_list2: "<strong>Первый флагманский проект:</strong> Запущен <em>Copacabana Beach Jomtien</em>, выдающийся проект на берегу моря, получивший множество наград.", about_list3: "<strong>Новый проект:</strong> В настоящее время мы строим <em>Copacabana Coral Reef Jomtien</em>, новый знаковый объект в нашем портфолио.", about_list4: "<strong>Наша страсть:</strong> Мы стремимся предлагать дизайн мирового класса, роскошные жилые пространства и исключительные возможности для инвестиций.", about_btn: "Читать наш профиль", about_badge: "Лет<br>Опыта",
+                profile_eyebrow: "Наша основа", profile_title: "Видение и Миссия", profile_vision_title: "Наше Видение", profile_vision_quote: '"Целеустремленность, честность и искренность"', profile_vision_desc: "Как ведущая девелоперская компания в Паттайе, мы создаем исключительное жилье, символизирующее успех. С целеустремленностью и честностью мы обеспечиваем клиентам высочайшее качество жизни.", profile_mission_title: "Наша Миссия", profile_mission_1: "<strong>Внимание к клиенту:</strong> Создавать роскошное и комфортное жилье, превосходящее ожидания клиентов.", profile_mission_2: "<strong>Превосходный дизайн:</strong> Проектировать пространства, которые одновременно функциональны и эстетичны.", profile_mission_3: "<strong>Развитие команды:</strong> Создавать позитивную рабочую атмосферу и уделять приоритетное внимание развитию персонала.",
+                csr_title: "Социальная ответственность", csr_desc: "Мы стремимся вносить позитивный вклад в жизнь общества и повышать качество жизни в нашем регионе. Через продуманные инициативы мы создаем процветающую среду для всех.",
+                proj_eyebrow: "Наше Портфолио", proj_title: "Избранные Проекты", proj_desc: "Изучите нашу эксклюзивную коллекцию резиденций премиум-класса, раздвигающих границы рынка недвижимости в Паттайе.",
+                proj1_tag: "Флагманский проект", proj1_title: "Copacabana Beach Jomtien", proj1_desc: "Наш потрясающий прибрежный проект. Признан не только за отличные продажи, но и за инновационный дизайн. Удостоен множества наград.", proj1_feat1: "Множество наград", proj1_feat2: "Премиальное жилье у моря", proj1_feat3: "Роскошные удобства", proj1_feat4: "Отличные инвестиции", proj1_btn: "Подробнее",
+                proj2_tag: "Новейший проект", proj2_title: "Copacabana Coral Reef Jomtien", proj2_desc: "Наш новый захватывающий проект, который станет еще одной достопримечательностью в нашем портфолио. Дизайн мирового класса и выгодные инвестиции.", proj2_feat1: "59 этажей (1,644 квартиры)", proj2_feat2: "Вид на море в каждой квартире", proj2_feat3: "1 и 2-комнатные квартиры", proj2_feat4: "Площадь 9 Рай", proj2_btn: "Оставить заявку",
+                cta_eyebrow: "Станьте частью великого", cta_title: "Зарегистрируйтесь у нас сегодня", cta_desc: "Наслаждайтесь специальными предложениями при прямом бронировании. Откройте для себя лучшую жизнь у моря.", cta_btn: "Регистрация",
+                news_eyebrow: "Будьте в курсе", news_title: "Последние Новости", news_tag_awards: "Награды", news_tag_update: "Обновления", news_tag_promo: "Акции", news1_title: "Copacabana Beach Jomtien удостоен множества наград", news2_title: "Представляем Copacabana Coral Reef Jomtien", news3_title: "Эксклюзивные предложения для подписчиков", news_readmore: "Читать статью",
+                footer_desc: "Устанавливаем стандарты роскошной жизни и архитектурного совершенства в самом сердце Восточного побережья Таиланда.", footer_quicklinks: "Быстрые ссылки", footer_link_proj: "Наши проекты", footer_link_news: "Новости и статьи", footer_contact: "Связаться с нами", footer_address: "385/16 Moo 12 Nongprue Banglamung Chonburi 20150", footer_office: "Офис: +66 (0) 38 225-374", footer_mobile: "Моб: +66 (0) 95 945 1665", footer_copyright: "&copy; 2026 Copacabana Group. Все права защищены.", footer_privacy: "Политика конфиденциальности", footer_terms: "Условия использования"
+            },
+            zh: {
+                nav_home: "首页", nav_about: "关于我们", nav_profile: "简介", nav_vision: "愿景与使命", nav_csr: "社会责任", nav_projects: "项目", nav_contact: "联系我们",
+                hero_sub: "欢迎体验卓越", hero_title: "探索我们的故事", hero_desc: "在芭堤雅体验极致的海岸优雅。20多年来深受信任的豪华房地产开发领导者。", hero_btn1: "探索项目", hero_btn2: "关于我们",
+                about_eyebrow: "关于 Copacabana 集团", about_heading: "芭堤雅的奢华目的地", about_desc: "凭借在芭堤雅繁荣的房地产市场超过 20 年的经验，Copacabana 集团已成为豪华房地产开发的领导者。", about_journey_title: "我们的历程与里程碑：", about_list1: "<strong>值得信赖的代理：</strong> 从土地销售开始，成为 Riviera Jomtien 等标志性项目的独家代理。", about_list2: "<strong>首个旗舰项目：</strong> 推出 <em>Copacabana Beach Jomtien</em>，这不仅在销售上取得突破，还以创新设计屡获殊荣。", about_list3: "<strong>最新项目：</strong> 目前正在开发 <em>Copacabana Coral Reef Jomtien</em>，有望成为芭堤雅的新地标。", about_list4: "<strong>我们的热情：</strong> 致力于为客户提供世界一流的设计、奢华的居住空间和卓越的投资机会。", about_btn: "阅读企业简介", about_badge: "年的<br>经验",
+                profile_eyebrow: "我们的核心", profile_title: "愿景与使命", profile_vision_title: "我们的愿景", profile_vision_quote: '"决心、诚实与真诚"', profile_vision_desc: "作为芭堤雅领先的房地产开发公司，我们致力于打造象征成功的卓越住所。凭借坚定的决心和诚意，我们努力为客户提供最高品质的生活体验。", profile_mission_title: "我们的使命", profile_mission_1: "<strong>以客户为中心：</strong> 打造超越客户期望的奢华舒适住所。", profile_mission_2: "<strong>卓越设计：</strong> 设计兼具功能性与美感的完美空间。", profile_mission_3: "<strong>团队赋能：</strong> 营造积极的工作环境，优先考虑员工的发展。",
+                csr_title: "社会责任", csr_desc: "我们致力于积极回馈社会，提高社区的生活质量。通过精心的项目开发，我们旨在为大家创造一个繁荣成功的环境。",
+                proj_eyebrow: "我们的作品", proj_title: "精选项目", proj_desc: "探索我们独家的高级住宅系列，突破芭堤雅房地产的标准。",
+                proj1_tag: "旗舰项目", proj1_title: "Copacabana Beach Jomtien (中天海滩项目)", proj1_desc: "我们令人惊叹的突破性海滨项目。其创新的设计和高标准的建筑质量赢得了无数奖项。", proj1_feat1: "屡获大奖", proj1_feat2: "一线海滨生活", proj1_feat3: "豪华设施", proj1_feat4: "卓越的投资回报", proj1_btn: "查看详情",
+                proj2_tag: "最新项目", proj2_title: "Copacabana Coral Reef Jomtien (珊瑚礁项目)", proj2_desc: "我们最新推出的激动人心的项目，有望成为我们组合中的又一地标。提供世界级的设计。", proj2_feat1: "59层 (1,644个单位)", proj2_feat2: "户户海景", proj2_feat3: "一居 / 两居室", proj2_feat4: "9莱 占地面积", proj2_btn: "登记意向",
+                cta_eyebrow: "参与伟大", cta_title: "今天就向我们注册", cta_desc: "直接预订即可享受特别优惠和独家礼遇。发现最美好的海滨生活。", cta_btn: "立即注册",
+                news_eyebrow: "保持关注", news_title: "最新新闻与活动", news_tag_awards: "奖项", news_tag_update: "项目更新", news_tag_promo: "促销", news1_title: "Copacabana Beach Jomtien 荣获多项大奖", news2_title: "隆重推出 Copacabana Coral Reef 项目", news3_title: "直接预订及电子报订阅者的独家优惠", news_readmore: "阅读文章",
+                footer_desc: "在泰国东海岸中心地带，确立奢华生活和建筑卓越的新标准。", footer_quicklinks: "快速链接", footer_link_proj: "我们的项目", footer_link_news: "新闻与文章", footer_contact: "联系我们 (销售办公室)", footer_address: "385/16 Moo 12 Nongprue Banglamung 芭堤雅 春武里 20150", footer_office: "办公室: +66 (0) 38 225-374", footer_mobile: "手机: +66 (0) 95 945 1665", footer_copyright: "&copy; 2026 Copacabana Group。版权所有。", footer_privacy: "隐私政策", footer_terms: "使用条款"
+            }
+        };
+
+        function setLanguage(lang, event) {
+            // Update text for elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+
+            // Update current language label
+            const langMap = { 'en': 'EN', 'th': 'TH', 'ru': 'RU', 'zh': 'ZH' };
+            document.getElementById('currentLang').innerText = langMap[lang];
+
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(btn => btn.classList.remove('active'));
+            if(event) event.currentTarget.classList.add('active');
+
+            // Close dropdown
+            document.getElementById('langSwitcher').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
