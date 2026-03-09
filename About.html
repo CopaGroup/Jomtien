@@ -369,6 +369,23 @@ img {
     color: var(--color-white);
     letter-spacing: 2px;
     transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+
+.navbar.scrolled .logo img {
+    max-height: 50px; /* ย่อขนาดโลโก้ลงเล็กน้อยเมื่อเลื่อนหน้าจอ */
+}
+
+.logo:hover img {
+    transform: scale(1.05);
 }
 
 .logo .group-text {
@@ -784,6 +801,14 @@ img {
 
 .project-card.reverse .project-info {
     order: -1;
+}
+
+.project-logo {
+    max-width: 220px;
+    max-height: 90px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    align-self: flex-start;
 }
 
 .project-tag {
@@ -1232,7 +1257,9 @@ img {
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">COPACABANA <br><span class="group-text">GROUP</span></a>
+            <a href="#" class="logo">
+                <img src="https://i.postimg.cc/9fLx4CBH/logo-copa-group.png" alt="COPACABANA GROUP">
+            </a>
             
             <div class="nav-links">
                 <a href="#home" data-i18n="nav_home">Home</a>
@@ -1399,6 +1426,7 @@ img {
                 </div>
                 <div class="project-info">
                     <span class="project-tag" data-i18n="proj1_tag">Flagship Project</span>
+                    <img src="https://i.postimg.cc/m27dPyW1/e9d920df009b1991.png" alt="Copacabana Beach Jomtien Logo" class="project-logo">
                     <h3 class="project-title" data-i18n="proj1_title">Copacabana Beach Jomtien</h3>
                     <p class="project-desc" data-i18n="proj1_desc">Our stunning beachfront breakthrough development. Recognized not only for its exceptional sales performance but also for its innovative design and high-quality construction. Honored with numerous awards.</p>
                     <ul class="project-features">
@@ -1420,6 +1448,7 @@ img {
                 </div>
                 <div class="project-info">
                     <span class="project-tag" data-i18n="proj2_tag">Newest Venture</span>
+                    <img src="https://i.postimg.cc/R01ZKZrv/new_logo_copa2.png" alt="Copacabana Coral Reef Logo" class="project-logo">
                     <h3 class="project-title" data-i18n="proj2_title">Copacabana Coral Reef Jomtien</h3>
                     <p class="project-desc" data-i18n="proj2_desc">Our latest exciting venture, promising to be another landmark development in our prestigious portfolio. Delivering world-class designs and exceptional investment opportunities.</p>
                     <ul class="project-features">
@@ -1507,7 +1536,9 @@ img {
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand fade-up">
-                    <a href="#" class="logo mb-4" style="display: block;">COPACABANA <br><span class="group-text">GROUP</span></a>
+                    <a href="#" class="logo mb-4" style="display: block;">
+                        <img src="https://i.postimg.cc/9fLx4CBH/logo-copa-group.png" alt="COPACABANA GROUP" style="max-height: 80px;">
+                    </a>
                     <p style="margin-top: 1.5rem; max-width: 300px;" data-i18n="footer_desc">Setting the standard for luxury living and architectural excellence in the heart of Thailand's Eastern Seaboard.</p>
                 </div>
                 
